@@ -386,12 +386,20 @@
       { text: `第10題：你得寵時皇帝生病了，你會？`, img: `10.jpg`, opts: [" 真心照料", " 把握時機鞏固地位", " 安排自己的人接近太醫署", " 表面照顧、保持距離"] }
     ];
 
-    const choiceScore = {
-      A: { strategy: 1, scheming: 0, grace: 2, favor: 1 },
-      B: { strategy: 0, scheming: 2, grace: -1, favor: 2 },
-      C: { strategy: 2, scheming: 3, grace: 0, favor: 1 },
-      D: { strategy: 1, scheming: 1, grace: 3, favor: 0 }
+    const scoreMap = {
+      1: [["B"], ["A","C"], ["F"], ["D","E"]],
+      2: [["D","E"], ["F","A"], ["B"], ["A"]],
+      3: [["B"], ["F"], ["A","C"], ["D","E"]],
+      4: [["D"], ["A","F"], ["B"], ["C","E"]],
+      5: [["C"], ["A","F"], ["B"], ["D","E"]],
+      6: [["C","E"], [], ["A","D"], ["B","F"]],
+      7: [["B"], ["A"], ["C","D"], ["E","F"]],
+      8: [["A","F"], [], ["C","D"], ["B","E"]],
+      9: [["C","D","F"], ["A","B","E"], [], []],
+      10:[["A","F"], ["C","D"], ["B"], ["E"]]
     };
+
+    let score = { A:0, B:0, C:0, D:0, E:0, F:0 };
 
     const resultAssets = {
       '華妃': { img: '0.jpg', desc: '你個性強勢、果敢，遇事敢做敢當。你的存在像一道烈火，能迅速壓制對手，但也因脾氣與情緒而容易招惹敵意。', quote: '「賤人就是矯情！」 — 華妃' },
@@ -486,50 +494,63 @@
     }
 
     function computeResult() {
-      const attr = { strategy: 0, scheming: 0, grace: 0, favor: 0 };
+
+      /* 依照你的 scoreMap 累積分數 */
       answers.forEach((ans, idx) => {
         if (ans == null) return;
-        const key = ['A', 'B', 'C', 'D'][ans];
-        const inc = choiceScore[key];
-        attr.strategy += inc.strategy;
-        attr.scheming += inc.scheming;
-        attr.grace += inc.grace;
-        attr.favor += inc.favor;
+        const plusList = scoreMap[idx + 1][ans];
+        plusList.forEach(k => score[k]++);
       });
 
-      let role = '淳兒';
-      if (attr.strategy >= 12 && attr.scheming >= 12) role = '皇后';
-      else if (attr.strategy >= 12 && attr.grace >= 10) role = '甄嬛';
-      else if (attr.scheming >= 12 && attr.grace < 8) role = '安陵容';
-      else if (attr.scheming >= 10 && attr.favor >= attr.strategy) role = '華妃';
-      else if (attr.grace >= 14 && attr.scheming <= 5) role = '沈眉莊';
-      else if ((attr.strategy + attr.scheming + attr.grace + attr.favor) < 15) role = '淳兒';
-      else role = '甄嬛';
+      /* 比較 A~F 分數 → 同分依 A>B>C>D>E>F */
+      const order = ["A","B","C","D","E","F"];
+      let winner = order[0];
+
+      order.forEach(role => {
+        if (score[role] > score[winner]) winner = role;
+      });
+
+      /* A B C D E F → 角色名 */
+      const roleName = {
+        A: "華妃",
+        B: "甄嬛",
+        C: "皇后",
+        D: "安陵容",
+        E: "沈眉莊",
+        F: "淳兒"
+      }[winner];
+
+      const data = resultAssets[roleName] || { img: '5.jpg', desc: '你性情難以歸類，獨具一格。', quote: '' };
+      const guessedText = guessed ? `<p class="small">你一開始預測自己會是：<strong>${guessed}</strong></p>` : '';
 
       qStep.classList.remove('active');
       resStep.classList.add('active');
-      const data = resultAssets[role] || { img: '5.jpg', desc: '你性情難以歸類，獨具一格。', quote: '' };
-      const guessedText = guessed ? `<p class="small">你一開始預測自己會是：<strong>${guessed}</strong></p>` : '';
+
       const area = document.getElementById('resultArea');
       area.innerHTML = `
       <div class="result-flex">
         <div class="result-left">
-          <img src="${data.img}" alt="${role}" style="width:100%;max-width:320px;border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,0.18)">
+          <img src="${data.img}" alt="${roleName}" style="width:100%;max-width:320px;border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,0.18)">
         </div>
         <div class="result-right">
-          <h3>結果：你像是 —— ${role}</h3>
+          <h3>結果：你像是 —— ${roleName}</h3>
           ${guessedText}
           <p>${data.desc}</p>
-          <p class="quote">「${data.quote.replace(/^\"|\"$/g, '')}」</p>
+          <p class="quote">${data.quote}</p>
+
           <div style="margin-top:18px">
             <button class="btn" onclick="location.reload()">重新開始</button>
-            <img src="fb.jpg" alt="FB分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'_blank')">
-            <img src="line.jpg" alt="LINE分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer" onclick="window.open('https://line.me/R/msg/text/?'+encodeURIComponent(location.href),'_blank')">
-            <img src="ig.jpg" alt="IG分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer" onclick="alert('Instagram 分享需手動上傳圖片或連結')">
+            <img src="fb.jpg" alt="FB分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
+              onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'_blank')">
+
+            <img src="line.jpg" alt="LINE分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
+              onclick="window.open('https://line.me/R/msg/text/?'+encodeURIComponent(location.href),'_blank')">
+
+            <img src="ig.jpg" alt="IG分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
+              onclick="alert('Instagram 分享需手動上傳圖片或連結')">
           </div>
         </div>
-      </div>
-    `;
+      </div>`;
     }
   </script>
 </body>
