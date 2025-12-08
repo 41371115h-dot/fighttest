@@ -387,19 +387,19 @@
     ];
 
     const scoreMap = {
-      1: [["B"], ["A","C"], ["F"], ["D","E"]],
-      2: [["D","E"], ["F","A"], ["B"], ["C"]],
-      3: [["B"], ["F"], ["A","C"], ["D","E"]],
-      4: [["D"], ["A","F"], ["B"], ["C","E"]],
-      5: [["C"], ["A","F"], ["B"], ["D","E"]],
-      6: [["C","E"], [], ["A","D"], ["B","F"]],
-      7: [["B"], ["A"], ["C","D"], ["E","F"]],
-      8: [["A","F"], [], ["C","D"], ["B","E"]],
-      9: [["C","D","F"], ["A","B","E"], [], []],
-      10:[["A","F"], ["C","D"], ["B"], ["E"]]
+      1: [["B"], ["A", "C"], ["F"], ["D", "E"]],
+      2: [["D", "E"], ["F", "A"], ["B"], ["C"]],
+      3: [["B"], ["F"], ["A", "C"], ["D", "E"]],
+      4: [["D"], ["A", "F"], ["B"], ["C", "E"]],
+      5: [["C"], ["A", "F"], ["B"], ["D", "E"]],
+      6: [["C", "E"], [], ["A", "D"], ["B", "F"]],
+      7: [["B"], ["A"], ["C", "D"], ["E", "F"]],
+      8: [["A", "F"], [], ["C", "D"], ["B", "E"]],
+      9: [["C", "D", "F"], ["A", "B", "E"], [], []],
+      10: [["A", "F"], ["C", "D"], ["B"], ["E"]]
     };
 
-    let score = { A:0, B:0, C:0, D:0, E:0, F:0 };
+    let score = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0 };
 
     const resultAssets = {
       '華妃': { img: '0.jpg', desc: '你個性強勢、果敢，遇事敢做敢當。你的存在像一道烈火，能迅速壓制對手，但也因脾氣與情緒而容易招惹敵意。', quote: '「賤人就是矯情！」 — 華妃' },
@@ -503,7 +503,7 @@
       });
 
       /* 比較 A~F 分數 → 同分依 A>B>C>D>E>F */
-      const order = ["A","B","C","D","E","F"];
+      const order = ["A", "B", "C", "D", "E", "F"];
       let winner = order[0];
 
       order.forEach(role => {
@@ -539,16 +539,22 @@
           <p class="quote">${data.quote}</p>
 
           <div style="margin-top:18px">
-            <button class="btn" onclick="location.reload()">重新開始</button>
-            <img src="fb.jpg" alt="FB分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
-              onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'_blank')">
+          <button class="btn" onclick="location.reload()">重新開始</button>
 
-            <img src="line.jpg" alt="LINE分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
-              onclick="window.open('https://line.me/R/msg/text/?'+encodeURIComponent(location.href),'_blank')">
+          <button class="btn" 
+            onclick="location.href='https://psychological-test-full-ver.onrender.com'">
+            回首頁
+          </button>
 
-            <img src="ig.jpg" alt="IG分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
-              onclick="alert('Instagram 分享需手動上傳圖片或連結')">
-          </div>
+          <img src="fb.jpg" alt="FB分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
+            onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'_blank')">
+
+          <img src="line.jpg" alt="LINE分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
+            onclick="window.open('https://line.me/R/msg/text/?'+encodeURIComponent(location.href),'_blank')">
+
+          <img src="ig.jpg" alt="IG分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
+            onclick="alert('Instagram 分享需手動上傳圖片或連結')">
+        </div>
         </div>
       </div>`;
     }
