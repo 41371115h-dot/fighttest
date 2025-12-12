@@ -370,7 +370,7 @@
     </div>
   </div>
 
-  <button id="exitBtn" onclick="location.href='https://psychological-test-full-ver.onrender.com'">離開測驗</button>
+  <button id="exitBtn" onclick="location.reload()">離開測驗</button>
 
   <script>
     const questions = [
@@ -379,27 +379,37 @@
       { text: `第 3 題：入宮第一個晚上，你會？`, img: `03.jpg`, opts: [" 謹慎觀察，不急著與人交好", " 主動結交姐妹，廣結善緣", " 悄悄打聽宮中勢力分布", " 認真讀宮規，不犯錯最重要"] },
       { text: `第 4 題：皇后娘娘召見你，你會如何回應？`, img: `04.jpg`, opts: [" 小心翼翼、不卑不亢", " 撒撒嬌，希望讓她喜歡", " 精準察言觀色，說她想聽的話", " 恭敬守規矩，完全按宮禮行事"] },
       { text: `第 5 題：嬪妃之間傳出你與皇帝關係好，你會？`, img: `05.jpg`, opts: [" 低調處理，不給人把柄", " 趁機增加 favor，讓皇帝更寵你", " 反向操作，讓敵人摸不著狀況", " 說是謠言，保持形象乾淨"] },
-      { text: `第 6 題：宮女不小心把你惹怒，你會？`, img: `06.jpg`, opts: [" 忍下，觀察是否有人在背後設計", " 直接責罰", " 表面原諒，內心記住", " 和平提醒"], death: { optionIndex: 1, type: 'certain', message: '宮女是華妃心腹，你責罰她＝得罪華妃。被打入冷宮，最終病死。', image: 'q1.jpg' } },
+      { text: `第 6 題：宮女不小心把你惹怒，你會？`, img: `06.jpg`, opts: [" 忍下，觀察是否有人在背後設計", " 直接責罰", " 表面原諒，內心記住", " 和平提醒"], death: { optionIndex: 1, type: 'certain', message: '宮女是華妃心腹，你責罰她＝得罪華妃。被打入冷宮，最終病死。進入宮中就要步步為營，一個行差踏錯，你就會被害死，你毫無心機，無法存活於后宮，宮鬥指數為0%', image: 'q1.jpg' } },
       { text: `第 7 題：有人在散播不利你的流言，你會？`, img: `07.jpg`, opts: [" 找源頭，查清楚", " 立刻反擊", " 用計讓對方露餡", " 等皇上心情好再解釋"] },
-      { text: `第 8 題：有人送你香囊，你會？`, img: `08.jpg`, opts: [" 先給宮女試", " 直接收下", " 拆開查看", " 拿去給太醫檢查"], death: { optionIndex: 1, type: 'certain', message: '香囊含麝香，你中招，當場暈倒死亡。', image: 'q2.jpg' } },
-      { text: `第 9 題：皇后與華妃同時召你，你只能去一個。`, img: `09.jpg`, opts: [" 去皇后那邊", " 去華妃那邊", " 裝病", " 說自己在陪皇上"], death: [{ optionIndex: 2, type: 'chance', chance: 0.5, message: '太醫揭穿你假病，兩面得罪，雪地跪整夜凍死。', image: 'q3.jpg' }, { optionIndex: 3, type: 'certain', message: '兩邊都得罪 → 被打入冷宮 → 死亡。', image: 'q4.jpg' }] },
+      { text: `第 8 題：有人送你香囊，你會？`, img: `08.jpg`, opts: [" 先給宮女試", " 直接收下", " 拆開查看", " 拿去給太醫檢查"], death: { optionIndex: 1, type: 'certain', message: '香囊含麝香，你中招，當場暈倒死亡。進入宮中就要步步為營，一個行差踏錯，你就會被害死，你毫無心機，無法存活於后宮，宮鬥指數為0%', image: 'q2.jpg' } },
+      { text: `第 9 題：皇后與華妃同時召你，你只能去一個。`, img: `09.jpg`, opts: [" 去皇后那邊", " 去華妃那邊", " 裝病", " 說自己在陪皇上"], death: [{ optionIndex: 2, type: 'chance', chance: 0.5, message: '太醫揭穿你假病，兩面得罪，雪地跪整夜凍死。進入宮中就要步步為營，一個行差踏錯，你就會被害死，你毫無心機，無法存活於后宮，宮鬥指數為0%', image: 'q3.jpg' }, { optionIndex: 3, type: 'certain', message: '兩邊都得罪 → 被打入冷宮 → 死亡。進入宮中就要步步為營，一個行差踏錯，你就會被害死，你毫無心機，無法存活於后宮，宮鬥指數為0%', image: 'q4.jpg' }] },
       { text: `第10題：你得寵時皇帝生病了，你會？`, img: `10.jpg`, opts: [" 真心照料", " 把握時機鞏固地位", " 安排自己的人接近太醫署", " 表面照顧、保持距離"] }
     ];
 
     const scoreMap = {
-      1: [["B"], ["A", "C"], ["F"], ["D", "E"]],
-      2: [["D", "E"], ["F", "A"], ["B"], ["C"]],
-      3: [["B"], ["F"], ["A", "C"], ["D", "E"]],
-      4: [["D"], ["A", "F"], ["B"], ["C", "E"]],
-      5: [["C"], ["A", "F"], ["B"], ["D", "E"]],
-      6: [["C", "E"], [], ["A", "D"], ["B", "F"]],
-      7: [["B"], ["A"], ["C", "D"], ["E", "F"]],
-      8: [["A", "F"], [], ["C", "D"], ["B", "E"]],
-      9: [["C", "D", "F"], ["A", "B", "E"], [], []],
-      10: [["A", "F"], ["C", "D"], ["B"], ["E"]]
+      1: [["B"], ["A","C"], ["F"], ["D","E"]],
+      2: [["D","E"], ["F","A"], ["B"], ["C"]],
+      3: [["B"], ["F"], ["A","C"], ["D","E"]],
+      4: [["D"], ["A","F"], ["B"], ["C","E"]],
+      5: [["C"], ["A","F"], ["B"], ["D","E"]],
+      6: [["C","E"], [], ["A","D"], ["B","F"]],
+      7: [["B"], ["A"], ["C","D"], ["E","F"]],
+      8: [["A","F"], [], ["C","D"], ["B","E"]],
+      9: [["C","D","F"], ["A","B","E"], [], []],
+      10:[["A","F"], ["C","D"], ["B"], ["E"]]
     };
 
-    let score = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0 };
+    let score = { A:0, B:0, C:0, D:0, E:0, F:0 };
+
+    /* MODIFICATION START: 增加 combatIndex (宮鬥指數) */
+    const combatIndices = {
+      '華妃': '70%',
+      '甄嬛': '100%',
+      '皇后': '90%',
+      '安陵容': '60%',
+      '沈眉莊': '50%',
+      '淳兒': '20%'
+    };
 
     const resultAssets = {
       '華妃': { img: '0.jpg', desc: '你個性強勢、果敢，遇事敢做敢當。你的存在像一道烈火，能迅速壓制對手，但也因脾氣與情緒而容易招惹敵意。', quote: '「賤人就是矯情！」 — 華妃' },
@@ -409,6 +419,7 @@
       '沈眉莊': { img: '4.jpg', desc: '你氣質高雅、內斂穩重，待人溫和但堅定。雖不以權謀制勝，卻能靠人格與風範贏得長久的信任。', quote: '「寧可枝頭抱香死，不曾吹落北風中。」 — 沈眉莊' },
       '淳兒': { img: '5.jpg', desc: '你純真無邪，心地善良。在泠泠宮鬥的世界裡，你像一縷清風，雖易受傷卻也最讓人心疼。', quote: '「我還是比較喜歡姐姐這裡的點心」 — 淳兒' }
     };
+    /* MODIFICATION END */
 
     let cur = 0;
     let answers = Array(questions.length).fill(null);
@@ -503,7 +514,7 @@
       });
 
       /* 比較 A~F 分數 → 同分依 A>B>C>D>E>F */
-      const order = ["A", "B", "C", "D", "E", "F"];
+      const order = ["A","B","C","D","E","F"];
       let winner = order[0];
 
       order.forEach(role => {
@@ -521,42 +532,44 @@
       }[winner];
 
       const data = resultAssets[roleName] || { img: '5.jpg', desc: '你性情難以歸類，獨具一格。', quote: '' };
-      const guessedText = guessed ? `<p class="small">你一開始預測自己會是：<strong>${guessed}</strong></p>` : '';
+      
+      /* MODIFICATION START: 獲取並格式化宮鬥指數 */
+      const actualCombatIndex = combatIndices[roleName] || '??%';
+      const guessedCombatIndex = combatIndices[guessed] || '??%';
+      
+      const guessedText = guessed ? `<p class="small">你一開始預測自己會是：<strong>${guessed}  宮鬥指數 : ${guessedCombatIndex}</strong></p>` : '';
+      /* MODIFICATION END */
 
       qStep.classList.remove('active');
       resStep.classList.add('active');
 
       const area = document.getElementById('resultArea');
+      /* MODIFICATION START: 修改結果標題，加入宮鬥指數 */
       area.innerHTML = `
       <div class="result-flex">
         <div class="result-left">
           <img src="${data.img}" alt="${roleName}" style="width:100%;max-width:320px;border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,0.18)">
         </div>
         <div class="result-right">
-          <h3>結果：你像是 —— ${roleName}</h3>
+          <h3>結果：你像是 —— ${roleName}   宮鬥指數 : ${actualCombatIndex}</h3>
           ${guessedText}
           <p>${data.desc}</p>
           <p class="quote">${data.quote}</p>
 
           <div style="margin-top:18px">
-          <button class="btn" onclick="location.reload()">重新開始</button>
+            <button class="btn" onclick="location.reload()">重新開始</button>
+            <img src="fb.jpg" alt="FB分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
+              onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'_blank')">
 
-          <button class="btn" 
-            onclick="location.href='https://psychological-test-full-ver.onrender.com'">
-            回首頁
-          </button>
+            <img src="line.jpg" alt="LINE分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
+              onclick="window.open('https://line.me/R/msg/text/?'+encodeURIComponent(location.href),'_blank')">
 
-          <img src="fb.jpg" alt="FB分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
-            onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'_blank')">
-
-          <img src="line.jpg" alt="LINE分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
-            onclick="window.open('https://line.me/R/msg/text/?'+encodeURIComponent(location.href),'_blank')">
-
-          <img src="ig.jpg" alt="IG分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
-            onclick="alert('Instagram 分享需手動上傳圖片或連結')">
-        </div>
+            <img src="ig.jpg" alt="IG分享" style="width:48px;height:48px;margin-left:6px;cursor:pointer"
+              onclick="alert('Instagram 分享需手動上傳圖片或連結')">
+          </div>
         </div>
       </div>`;
+      /* MODIFICATION END */
     }
   </script>
 </body>
