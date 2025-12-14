@@ -370,7 +370,9 @@
     </div>
   </div>
 
-  <button id="exitBtn" onclick="location.reload()">離開測驗</button>
+  <button id="exitBtn" onclick="window.open('https://psychological-test-full-ver.onrender.com', '_blank')">
+    回首頁
+  </button>
 
   <script>
     const questions = [
@@ -387,19 +389,19 @@
     ];
 
     const scoreMap = {
-      1: [["B"], ["A","C"], ["F"], ["D","E"]],
-      2: [["D","E"], ["F","A"], ["B"], ["C"]],
-      3: [["B"], ["F"], ["A","C"], ["D","E"]],
-      4: [["D"], ["A","F"], ["B"], ["C","E"]],
-      5: [["C"], ["A","F"], ["B"], ["D","E"]],
-      6: [["C","E"], [], ["A","D"], ["B","F"]],
-      7: [["B"], ["A"], ["C","D"], ["E","F"]],
-      8: [["A","F"], [], ["C","D"], ["B","E"]],
-      9: [["C","D","F"], ["A","B","E"], [], []],
-      10:[["A","F"], ["C","D"], ["B"], ["E"]]
+      1: [["B"], ["A", "C"], ["F"], ["D", "E"]],
+      2: [["D", "E"], ["F", "A"], ["B"], ["C"]],
+      3: [["B"], ["F"], ["A", "C"], ["D", "E"]],
+      4: [["D"], ["A", "F"], ["B"], ["C", "E"]],
+      5: [["C"], ["A", "F"], ["B"], ["D", "E"]],
+      6: [["C", "E"], [], ["A", "D"], ["B", "F"]],
+      7: [["B"], ["A"], ["C", "D"], ["E", "F"]],
+      8: [["A", "F"], [], ["C", "D"], ["B", "E"]],
+      9: [["C", "D", "F"], ["A", "B", "E"], [], []],
+      10: [["A", "F"], ["C", "D"], ["B"], ["E"]]
     };
 
-    let score = { A:0, B:0, C:0, D:0, E:0, F:0 };
+    let score = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0 };
 
     /* MODIFICATION START: 增加 combatIndex (宮鬥指數) */
     const combatIndices = {
@@ -514,7 +516,7 @@
       });
 
       /* 比較 A~F 分數 → 同分依 A>B>C>D>E>F */
-      const order = ["A","B","C","D","E","F"];
+      const order = ["A", "B", "C", "D", "E", "F"];
       let winner = order[0];
 
       order.forEach(role => {
@@ -532,11 +534,11 @@
       }[winner];
 
       const data = resultAssets[roleName] || { img: '5.jpg', desc: '你性情難以歸類，獨具一格。', quote: '' };
-      
+
       /* MODIFICATION START: 獲取並格式化宮鬥指數 */
       const actualCombatIndex = combatIndices[roleName] || '??%';
       const guessedCombatIndex = combatIndices[guessed] || '??%';
-      
+
       const guessedText = guessed ? `<p class="small">你一開始預測自己會是：<strong>${guessed}  宮鬥指數 : ${guessedCombatIndex}</strong></p>` : '';
       /* MODIFICATION END */
 
